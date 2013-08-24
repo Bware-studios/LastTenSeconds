@@ -179,6 +179,8 @@
 		9767433E17C8CFE100B3A173 /* prueba1_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9767433B17C8CFE100B3A173 /* prueba1_2.png */; };
 		9767433F17C8CFE100B3A173 /* prueba1_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9767433C17C8CFE100B3A173 /* prueba1_3.png */; };
 		9767434317C8D4C400B3A173 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9767434117C8D4C400B3A173 /* GameLayer.cpp */; };
+		979C0B0217C9459F00033FAE /* jumping.png in Resources */ = {isa = PBXBuildFile; fileRef = 979C0B0017C9459F00033FAE /* jumping.png */; };
+		979C0B0317C9459F00033FAE /* running.png in Resources */ = {isa = PBXBuildFile; fileRef = 979C0B0117C9459F00033FAE /* running.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -536,6 +538,8 @@
 		9767433C17C8CFE100B3A173 /* prueba1_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prueba1_3.png; sourceTree = "<group>"; };
 		9767434117C8D4C400B3A173 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLayer.cpp; path = ../Classes/GameLayer.cpp; sourceTree = "<group>"; };
 		9767434217C8D4C400B3A173 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = ../Classes/GameLayer.h; sourceTree = "<group>"; };
+		979C0B0017C9459F00033FAE /* jumping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jumping.png; path = hr/jumping.png; sourceTree = "<group>"; };
+		979C0B0117C9459F00033FAE /* running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = running.png; path = hr/running.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1152,6 +1156,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				979C0B0017C9459F00033FAE /* jumping.png */,
+				979C0B0117C9459F00033FAE /* running.png */,
 				9767433A17C8CFE100B3A173 /* prueba1_1.png */,
 				9767433B17C8CFE100B3A173 /* prueba1_2.png */,
 				9767433C17C8CFE100B3A173 /* prueba1_3.png */,
@@ -1255,6 +1261,8 @@
 				9767433D17C8CFE100B3A173 /* prueba1_1.png in Resources */,
 				9767433E17C8CFE100B3A173 /* prueba1_2.png in Resources */,
 				9767433F17C8CFE100B3A173 /* prueba1_3.png in Resources */,
+				979C0B0217C9459F00033FAE /* jumping.png in Resources */,
+				979C0B0317C9459F00033FAE /* running.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

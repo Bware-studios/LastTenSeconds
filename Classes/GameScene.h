@@ -15,6 +15,8 @@
 
 ;
 
+extern const float optimum_step_size;
+
 
 class GameScene : public CCScene {
 public:
@@ -23,16 +25,22 @@ public:
     static GameScene *create();
     bool init();
     
-    void unpaso(int paso);
+    void unpaso(float paso);
+    void start_explossion();
     
     
+    CCAnimation *anim_run;
     class GameLayer *control_layer;
     static class GameScene *theGameScene;
     
     
-    CCSpriteFrame *man_frames[3];
+    CCSpriteFrame *man_frames[8];
     CCSprite *man;
     float man_x;
+    
+    CCParticleExplosion *explossion1;
+    CCParticleExplosion *explossion2;
+
 };
 
 

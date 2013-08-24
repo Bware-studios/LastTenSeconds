@@ -22,7 +22,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     pEGLView->setDesignResolutionSize(960, 640, kResolutionNoBorder);
     
-    //pEGLView->setContentScaleFactor(2);
+    //pEGLView->setContentScaleFactor(0.5);
     
     
     
