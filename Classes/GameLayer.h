@@ -11,6 +11,8 @@
 
 
 #include "common.h"
+#include "GameScene.h"
+
 
 class GameLayer : public CCLayer {
 public:
@@ -19,7 +21,14 @@ public:
     static GameLayer *create();
     bool init();
     
+    bool ccTouchBegan(CCTouch *touch, CCEvent *event);
+    void ccTouchMoved(CCTouch *touch, CCEvent *event);
+    void ccTouchEnded(CCTouch *touch, CCEvent *event);
+    void ccTouchCancelled(CCTouch *touch, CCEvent *event);
+
     
+    
+    int paso;
     
 };
 

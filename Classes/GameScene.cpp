@@ -9,7 +9,7 @@
 #include "GameScene.h"
 
 
-GameScene *theGameScene=NULL;
+GameScene *GameScene::theGameScene=NULL;
 
 GameScene::GameScene() {
     
@@ -47,20 +47,36 @@ bool GameScene::init() {
     control_layer=GameLayer::create();
     this->addChild(control_layer,200);
     
+
+    man_frames[0]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("correr_1");
+    man_frames[1]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("correr_2");
+    man_frames[2]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("correr_3");
+
+    
+    man_x=0;
     man=CCSprite::createWithSpriteFrameName("correr_1");
     man->setAnchorPoint(ccp(0.5,0));
-    man->setPosition(ccp(10,200));
+    man->setPosition(ccp(10+man_x,200));
     this->addChild(man,20);
+
     
     return true;
 }
 
 
+void GameScene::unpaso(int paso) {
+    man_x+=5;
+    man->setPosition(ccp(10+man_x,200));
+    man->setDisplayFrame(man_frames[paso%3]);
+}
+
+
+
 
 GameScene *get_game_scene() {
-    if (theGameScene==NULL) {
-        theGameScene=GameScene::create();
+    if (GameScene::theGameScene==NULL) {
+        GameScene::theGameScene=GameScene::create();
     }
     
-    return theGameScene;
+    return GameScene::theGameScene;
 }

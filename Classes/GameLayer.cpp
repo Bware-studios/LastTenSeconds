@@ -32,9 +32,30 @@ bool GameLayer::init() {
     
     //this->setKeypadEnabled(true);
     this->setTouchEnabled(true);
+    this->setTouchMode(kCCTouchesOneByOne);
     
+    paso=0;
     
     return true;
 }
 
 
+bool GameLayer::ccTouchBegan(CCTouch *touch, CCEvent *event) {
+    printf("touch\n");
+    paso+=1;
+    GameScene::theGameScene->unpaso(paso);
+    
+    return true;
+}
+
+void GameLayer::ccTouchMoved(CCTouch *touch, CCEvent *event) {
+    
+}
+
+void GameLayer::ccTouchEnded(CCTouch *touch, CCEvent *event) {
+    
+}
+
+void GameLayer::ccTouchCancelled(CCTouch *touch, CCEvent *event) {
+    
+}

@@ -13,6 +13,8 @@
 #include "common.h"
 #include "GameLayer.h"
 
+;
+
 
 class GameScene : public CCScene {
 public:
@@ -21,11 +23,16 @@ public:
     static GameScene *create();
     bool init();
     
-    GameLayer *control_layer;
+    void unpaso(int paso);
     
     
+    class GameLayer *control_layer;
+    static class GameScene *theGameScene;
+    
+    
+    CCSpriteFrame *man_frames[3];
     CCSprite *man;
-    
+    float man_x;
 };
 
 
