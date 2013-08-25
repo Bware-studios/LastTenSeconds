@@ -24,8 +24,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     //pEGLView->setContentScaleFactor(0.5);
     
-    
-    
+    cc_timeval seedtime;
+    CCTime::gettimeofdayCocos2d(&seedtime, NULL);
+    srand(seedtime.tv_usec);
     
 	
     // turn on display FPS

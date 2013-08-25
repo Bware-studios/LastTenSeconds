@@ -15,4 +15,6 @@ using namespace std;
 #include "cocos2d.h"
 using namespace cocos2d;
 
+#include "utils.h"
+
 #endif

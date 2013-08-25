@@ -173,6 +173,10 @@
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
 		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
+		9743408717C977E100CF2A80 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9743408617C977E100CF2A80 /* utils.cpp */; };
+		9743408B17C97AB700CF2A80 /* muebles.png in Resources */ = {isa = PBXBuildFile; fileRef = 9743408917C97AB700CF2A80 /* muebles.png */; };
+		9743408C17C97AB700CF2A80 /* testigos.png in Resources */ = {isa = PBXBuildFile; fileRef = 9743408A17C97AB700CF2A80 /* testigos.png */; };
+		9743408F17C9893700CF2A80 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9743408D17C9893700CF2A80 /* MenuScene.cpp */; };
 		9767433517C8B79800B3A173 /* LoadScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9767433317C8B79800B3A173 /* LoadScene.cpp */; };
 		9767433917C8C23F00B3A173 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9767433717C8C23E00B3A173 /* GameScene.cpp */; };
 		9767433D17C8CFE100B3A173 /* prueba1_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9767433A17C8CFE100B3A173 /* prueba1_1.png */; };
@@ -528,6 +532,12 @@
 		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
 		8C583FAB169DB6D500F63A10 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImplMac.h; path = CCEditBox/CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCEditBoxImplMac.mm; path = CCEditBox/CCEditBoxImplMac.mm; sourceTree = "<group>"; };
+		9743408617C977E100CF2A80 /* utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cpp; path = ../Classes/utils.cpp; sourceTree = "<group>"; };
+		9743408817C9780100CF2A80 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = utils.h; path = ../Classes/utils.h; sourceTree = "<group>"; };
+		9743408917C97AB700CF2A80 /* muebles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = muebles.png; path = hr/muebles.png; sourceTree = "<group>"; };
+		9743408A17C97AB700CF2A80 /* testigos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testigos.png; path = hr/testigos.png; sourceTree = "<group>"; };
+		9743408D17C9893700CF2A80 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuScene.cpp; path = ../Classes/MenuScene.cpp; sourceTree = "<group>"; };
+		9743408E17C9893700CF2A80 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = ../Classes/MenuScene.h; sourceTree = "<group>"; };
 		9767433317C8B79800B3A173 /* LoadScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LoadScene.cpp; path = ../Classes/LoadScene.cpp; sourceTree = "<group>"; };
 		9767433417C8B79800B3A173 /* LoadScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadScene.h; path = ../Classes/LoadScene.h; sourceTree = "<group>"; };
 		9767433617C8B7EB00B3A173 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../Classes/common.h; sourceTree = "<group>"; };
@@ -568,10 +578,14 @@
 			isa = PBXGroup;
 			children = (
 				9767433617C8B7EB00B3A173 /* common.h */,
+				9743408617C977E100CF2A80 /* utils.cpp */,
+				9743408817C9780100CF2A80 /* utils.h */,
 				1AFAF8C616D3886000DB1158 /* AppDelegate.cpp */,
 				1AFAF8C716D3886000DB1158 /* AppDelegate.h */,
 				9767433317C8B79800B3A173 /* LoadScene.cpp */,
 				9767433417C8B79800B3A173 /* LoadScene.h */,
+				9743408D17C9893700CF2A80 /* MenuScene.cpp */,
+				9743408E17C9893700CF2A80 /* MenuScene.h */,
 				9767433717C8C23E00B3A173 /* GameScene.cpp */,
 				9767433817C8C23E00B3A173 /* GameScene.h */,
 				9767434117C8D4C400B3A173 /* GameLayer.cpp */,
@@ -1156,6 +1170,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9743408917C97AB700CF2A80 /* muebles.png */,
+				9743408A17C97AB700CF2A80 /* testigos.png */,
 				979C0B0017C9459F00033FAE /* jumping.png */,
 				979C0B0117C9459F00033FAE /* running.png */,
 				9767433A17C8CFE100B3A173 /* prueba1_1.png */,
@@ -1263,6 +1279,8 @@
 				9767433F17C8CFE100B3A173 /* prueba1_3.png in Resources */,
 				979C0B0217C9459F00033FAE /* jumping.png in Resources */,
 				979C0B0317C9459F00033FAE /* running.png in Resources */,
+				9743408B17C97AB700CF2A80 /* muebles.png in Resources */,
+				9743408C17C97AB700CF2A80 /* testigos.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1424,6 +1442,8 @@
 				9767433517C8B79800B3A173 /* LoadScene.cpp in Sources */,
 				9767433917C8C23F00B3A173 /* GameScene.cpp in Sources */,
 				9767434317C8D4C400B3A173 /* GameLayer.cpp in Sources */,
+				9743408717C977E100CF2A80 /* utils.cpp in Sources */,
+				9743408F17C9893700CF2A80 /* MenuScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

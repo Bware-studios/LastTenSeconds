@@ -33,8 +33,9 @@ public:
     class GameLayer *control_layer;
     static class GameScene *theGameScene;
     
+    CCSprite **objetos;
+    CCSprite **people;
     
-    CCSpriteFrame *man_frames[8];
     CCSprite *man;
     float man_x;
     

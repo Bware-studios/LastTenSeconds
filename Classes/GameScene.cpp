@@ -9,7 +9,9 @@
 #include "GameScene.h"
 
 const float optimum_step_size = 100.0;
-
+const int num_objetos = 3;
+const int num_people = 3;
+const CCPoint bomb_position=ccp(800,220);
 
 GameScene *GameScene::theGameScene=NULL;
 
@@ -75,6 +77,8 @@ bool GameScene::init() {
     explossion1->setEndColorVar((const ccColor4F){.1,.1,0,.3});
     explossion2->setStartColor((const ccColor4F){.8,0.8,0.0,1.0});
     explossion2->setStartColorVar((const ccColor4F){.1,.1,0,.3});
+    explossion2->setEndColor((const ccColor4F){.8,0.8,0.0,1.0});
+    explossion2->setEndColorVar((const ccColor4F){.1,.1,0,.3});
     explossion1->setAngle(90);
     explossion1->setAngleVar(90);
     explossion2->setAngle(90);
@@ -88,23 +92,52 @@ bool GameScene::init() {
     addChild(explossion2,22);
 
     
-    explossion1->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()-> spriteFrameByName("run1"));
-    
-    man_frames[0]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run1");
-    man_frames[1]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run2");
-    man_frames[2]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run3");
-    man_frames[3]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run4");
-    man_frames[4]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run5");
-    man_frames[5]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run6");
-    man_frames[6]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run7");
-    man_frames[7]=CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run8");
+    //explossion1->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()-> spriteFrameByName("run1"));
+  
 
+    objetos=new CCSprite*[num_objetos];
+
+    objetos[0]=CCSprite::createWithSpriteFrameName("bomb");
+    objetos[0]->setPosition(bomb_position);
+    objetos[0]->setAnchorPoint(ccp(0.5,0));
+    addChild(objetos[0],15);
+    
+    int i;
+    char oname[]="obj1";
+    for (i=1;i<num_objetos;i++) {
+        sprintf(oname,"obj%u",(int)(1+(random()%6)));
+        objetos[i]=CCSprite::createWithSpriteFrameName(oname);
+        objetos[i]->setAnchorPoint(ccp(0.5,0));
+        objetos[i]->setPosition(ccp(r_unif(400,900),r_unif(230, 250)));
+        addChild(objetos[i],14);
+        printf("%f\n",r_unif(400, 900)  );
+    }
+    
+    people=new CCSprite*[num_people];
+
+    
+    char pname[]="people1_1";
+    for (i=0;i<num_people;i++) {
+        int j;
+        j=(int)(1+(random()%3));
+        sprintf(pname,"people%u_1",j);
+        people[i]=CCSprite::createWithSpriteFrameName(pname);
+        people[i]->setAnchorPoint(ccp(0.5,0));
+        people[i]->setPosition(ccp(r_unif(400,900),r_unif(230, 250)));
+        addChild(people[i],14);
+        sprintf(pname,"people%u",j);
+        people[i]->runAction(CCRepeatForever::create(CCAnimate::create(CCAnimationCache::sharedAnimationCache()->animationByName(pname))));
+    }
+    
+    
     
     man_x=0;
     man=CCSprite::createWithSpriteFrameName("run1");
     man->setAnchorPoint(ccp(0.5,0));
     man->setPosition(ccp(10+man_x,200));
     //man->runAction(CCRepeatForever::create(CCAnimate::create(anim_run)));
+
+
     
     unpaso(optimum_step_size);
 
@@ -127,10 +160,14 @@ void GameScene::unpaso(float paso) {
 
 void GameScene::start_explossion() {
     printf("booom\n");
-    explossion1->setPosition(ccp(800,220));
+    explossion1->setPosition(bomb_position);
     explossion1->resetSystem();
-    explossion2->setPosition(ccp(800,220));
+    explossion2->setPosition(bomb_position);
     explossion2->resetSystem();
+    
+    
+    
+    
 }
 
 GameScene *get_game_scene() {
