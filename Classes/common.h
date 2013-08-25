@@ -17,4 +17,10 @@ using namespace cocos2d;
 
 #include "utils.h"
 
+#include "Sound.h"
+
+#include "MenuScene.h"
+#include "GameScene.h"
+
+
 #endif

@@ -52,6 +52,9 @@ bool LoadScene::init() {
 bool LoadScene::loadAssets() {
     printf("loading...\n");
     
+
+    sound_preload_all();
+    
     CCSpriteFrameCache *sf_cache;
     CCSpriteFrame *sf;
 
@@ -101,26 +104,26 @@ bool LoadScene::loadAssets() {
     
     char people_name[]="testigos.png";
     file_name=people_name;
-    sw=264;
-    sh=264;
+    sw=256;
+    sh=256;
     sf = CCSpriteFrame::create(file_name, CCRectMake(0*sw, 0*sh, sw, sh));
     sf_cache->addSpriteFrame(sf, "people1_1");
+//    sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 0*sh, sw, sh));
+//    sf_cache->addSpriteFrame(sf, "people1_2");
+//    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 0*sh, sw, sh));
+//    sf_cache->addSpriteFrame(sf, "people1_3");
     sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 0*sh, sw, sh));
-    sf_cache->addSpriteFrame(sf, "people1_2");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 0*sh, sw, sh));
-    sf_cache->addSpriteFrame(sf, "people1_3");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(0*sw, 1*sh, sw, sh));
     sf_cache->addSpriteFrame(sf, "people2_1");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 1*sh, sw, sh));
-    sf_cache->addSpriteFrame(sf, "people2_2");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 1*sh, sw, sh));
-    sf_cache->addSpriteFrame(sf, "people2_3");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(0*sw, 2*sh, sw, sh));
+//    sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 1*sh, sw, sh));
+//    sf_cache->addSpriteFrame(sf, "people2_2");
+//    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 1*sh, sw, sh));
+//    sf_cache->addSpriteFrame(sf, "people2_3");
+    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 0*sh, sw, sh));
     sf_cache->addSpriteFrame(sf, "people3_1");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 2*sh, sw, sh));
-    sf_cache->addSpriteFrame(sf, "people3_2");
-    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 2*sh, sw, sh));
-    sf_cache->addSpriteFrame(sf, "people3_3");
+//    sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 2*sh, sw, sh));
+//    sf_cache->addSpriteFrame(sf, "people3_2");
+//    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 2*sh, sw, sh));
+//    sf_cache->addSpriteFrame(sf, "people3_3");
     
     
     CCAnimationCache *an_cache;
@@ -130,20 +133,20 @@ bool LoadScene::loadAssets() {
     an_cache = CCAnimationCache::sharedAnimationCache();
     
     frames=CCArray::create(sf_cache->spriteFrameByName("run3"),sf_cache->spriteFrameByName("run4"),sf_cache->spriteFrameByName("run5"),sf_cache->spriteFrameByName("run6"),sf_cache->spriteFrameByName("run7"),sf_cache->spriteFrameByName("run8"),sf_cache->spriteFrameByName("run1"),sf_cache->spriteFrameByName("run2"),NULL);
-    anim=CCAnimation::createWithSpriteFrames(frames,0.125);
+    anim=CCAnimation::createWithSpriteFrames(frames,0.125/*/slowmotion_factor*/);
     an_cache->addAnimation(anim, "run");
 
-    frames=CCArray::create(sf_cache->spriteFrameByName("people1_1"),sf_cache->spriteFrameByName("people1_2"),sf_cache->spriteFrameByName("people1_3"),NULL);
-    anim=CCAnimation::createWithSpriteFrames(frames,1);
-    an_cache->addAnimation(anim, "people1");
-
-    frames=CCArray::create(sf_cache->spriteFrameByName("people2_1"),sf_cache->spriteFrameByName("people2_2"),sf_cache->spriteFrameByName("people2_3"),NULL);
-    anim=CCAnimation::createWithSpriteFrames(frames,0.5);
-    an_cache->addAnimation(anim, "people2");
-
-    frames=CCArray::create(sf_cache->spriteFrameByName("people3_1"),sf_cache->spriteFrameByName("people3_2"),sf_cache->spriteFrameByName("people3_3"),NULL);
-    anim=CCAnimation::createWithSpriteFrames(frames,0.7);
-    an_cache->addAnimation(anim, "people3");
+//    frames=CCArray::create(sf_cache->spriteFrameByName("people1_1"),sf_cache->spriteFrameByName("people1_2"),sf_cache->spriteFrameByName("people1_3"),NULL);
+//    anim=CCAnimation::createWithSpriteFrames(frames,1/slowmotion_factor);
+//    an_cache->addAnimation(anim, "people1");
+//
+//    frames=CCArray::create(sf_cache->spriteFrameByName("people2_1"),sf_cache->spriteFrameByName("people2_2"),sf_cache->spriteFrameByName("people2_3"),NULL);
+//    anim=CCAnimation::createWithSpriteFrames(frames,0.5/slowmotion_factor);
+//    an_cache->addAnimation(anim, "people2");
+//
+//    frames=CCArray::create(sf_cache->spriteFrameByName("people3_1"),sf_cache->spriteFrameByName("people3_2"),sf_cache->spriteFrameByName("people3_3"),NULL);
+//    anim=CCAnimation::createWithSpriteFrames(frames,0.7/slowmotion_factor);
+//    an_cache->addAnimation(anim, "people3");
 
     
     
@@ -154,7 +157,7 @@ bool LoadScene::loadAssets() {
 
 void LoadScene::completed_load() {
     printf("done\n");
-    CCDirector::sharedDirector()->replaceScene(get_game_scene());
-    
+    //CCDirector::sharedDirector()->replaceScene(get_game_scene());
+    MenuScene::getMenuScene()->waitForPlay();
 }
 

@@ -9,9 +9,17 @@
 #include "GameScene.h"
 
 const float optimum_step_size = 100.0;
-const int num_objetos = 3;
+const int num_objetos = 4;
 const int num_people = 3;
-const CCPoint bomb_position=ccp(800,220);
+const float baseline_height = 100.0;
+const CCPoint bomb_position=ccp(800,baseline_height+25);
+const CCPoint center_position=ccp(480,320);
+
+
+// velocity for object at 100px
+const float explossion_object_velocityk = 1000.0;
+const float explossion_object_avelocity = 90.0;
+const float explossion_object_time = 3.0;
 
 GameScene *GameScene::theGameScene=NULL;
 
@@ -20,7 +28,7 @@ GameScene::GameScene() {
 }
 
 GameScene::~GameScene() {
-    
+    theGameScene=NULL;
 }
 
 GameScene *GameScene::create() {
@@ -40,15 +48,21 @@ bool GameScene::init() {
 
     
     CCLayerColor *background;
-    background=CCLayerColor::create((const ccColor4B){200,200,200,255});
+    background=CCLayerColor::create((const ccColor4B){0,0,0,255});
     this->addChild(background,0);
     
-    CCLayerColor *suelo;
-    suelo=CCLayerColor::create((const ccColor4B){0,100,0,255}, 1000, 100);
-    suelo->ignoreAnchorPointForPosition(false);
-    suelo->setAnchorPoint(ccp(0.5,0.5));
-    suelo->setPosition(ccp(480,200));
-    this->addChild(suelo,10);
+    CCSprite *background_wall;
+    background_wall=CCSprite::create("fondo.png");
+    background_wall->setAnchorPoint(ccp(0.5,0));
+    background_wall->setPosition(ccp(center_position.x,baseline_height));
+    addChild(background_wall,1);
+    
+//    CCLayerColor *suelo;
+//    suelo=CCLayerColor::create((const ccColor4B){0,100,0,255}, 1000, 100);
+//    suelo->ignoreAnchorPointForPosition(false);
+//    suelo->setAnchorPoint(ccp(0.5,0.5));
+//    suelo->setPosition(ccp(480,200));
+//    this->addChild(suelo,10);
     
     control_layer=GameLayer::create();
     this->addChild(control_layer,200);
@@ -93,7 +107,7 @@ bool GameScene::init() {
 
     
     //explossion1->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()-> spriteFrameByName("run1"));
-  
+
 
     objetos=new CCSprite*[num_objetos];
 
@@ -108,9 +122,8 @@ bool GameScene::init() {
         sprintf(oname,"obj%u",(int)(1+(random()%6)));
         objetos[i]=CCSprite::createWithSpriteFrameName(oname);
         objetos[i]->setAnchorPoint(ccp(0.5,0));
-        objetos[i]->setPosition(ccp(r_unif(400,900),r_unif(230, 250)));
-        addChild(objetos[i],14);
-        printf("%f\n",r_unif(400, 900)  );
+        objetos[i]->setPosition(ccp(200*i+r_unif(0,100),baseline_height+85));
+        addChild(objetos[i],12);
     }
     
     people=new CCSprite*[num_people];
@@ -120,13 +133,15 @@ bool GameScene::init() {
     for (i=0;i<num_people;i++) {
         int j;
         j=(int)(1+(random()%3));
+        j=1+(i%3);
         sprintf(pname,"people%u_1",j);
         people[i]=CCSprite::createWithSpriteFrameName(pname);
         people[i]->setAnchorPoint(ccp(0.5,0));
-        people[i]->setPosition(ccp(r_unif(400,900),r_unif(230, 250)));
+        people[i]->setPosition(ccp(200+220*i+r_unif(0,100),baseline_height+60));
+        people[i]->setFlipX(CCRANDOM_0_1()>0.5);
         addChild(people[i],14);
-        sprintf(pname,"people%u",j);
-        people[i]->runAction(CCRepeatForever::create(CCAnimate::create(CCAnimationCache::sharedAnimationCache()->animationByName(pname))));
+//        sprintf(pname,"people%u",j);
+//        people[i]->runAction(CCRepeatForever::create(CCAnimate::create(CCAnimationCache::sharedAnimationCache()->animationByName(pname))));
     }
     
     
@@ -134,13 +149,13 @@ bool GameScene::init() {
     man_x=0;
     man=CCSprite::createWithSpriteFrameName("run1");
     man->setAnchorPoint(ccp(0.5,0));
-    man->setPosition(ccp(10+man_x,200));
+    man->setPosition(ccp(-30,baseline_height+20));
     //man->runAction(CCRepeatForever::create(CCAnimate::create(anim_run)));
 
 
     
     unpaso(optimum_step_size);
-
+    sound_play_slowmotionsong();
     this->addChild(man,20);
 
     
@@ -153,8 +168,16 @@ void GameScene::unpaso(float paso) {
 //    man->setPosition(ccp(10+man_x,200));
 //    man->setDisplayFrame(man_frames[paso%8]);
     man->runAction(CCAnimate::create(anim_run));
-    man->runAction(CCMoveBy::create(1.0, ccp(paso,0)));
+    man->runAction(CCMoveBy::create(1.0/slowmotion_factor, ccp(paso,0)));
 
+}
+
+void GameScene::check_win() {
+    CCPoint manpos=man->getPosition();
+    if (fabs(manpos.x-bomb_position.x) < 5.0) {
+        score_seconds_left=10-control_layer->tnow;
+        schedule_win();
+    }
 }
 
 
@@ -165,10 +188,54 @@ void GameScene::start_explossion() {
     explossion2->setPosition(bomb_position);
     explossion2->resetSystem();
     
+    int i;
+    for (i=1;i<num_objetos;i++) {
+        explossion_move_sprite(objetos[i]);
+    }
+    for (i=0;i<num_people;i++) {
+        explossion_move_sprite(people[i]);
+    }
+    explossion_move_sprite(man);
+    removeChild(objetos[0]);
     
+    sound_stop_slowmotionsong();
+    sound_play_effect(sound_explosion_name);
     
-    
+    runAction(CCSequence::create(CCDelayTime::create(3.0),CCCallFunc::create(this, callfunc_selector(GameScene::schedule_lost)),NULL));
 }
+
+void GameScene::explossion_move_sprite(CCSprite *s) {
+    CCPoint spos=s->getPosition();
+    CCPoint v;
+    float d;
+    float av;
+    v.x=spos.x-bomb_position.x;
+    v.y=spos.y-bomb_position.y;
+    d=sqrtf(v.x*v.x+v.y*v.y);
+    v.x/=d;
+    v.y/=d;
+    av=v.x*explossion_object_avelocity;
+    v.x*=explossion_object_velocityk*100.0/d;
+    v.y*=explossion_object_velocityk*100.0/d;
+    v.x*=explossion_object_time;
+    v.y*=explossion_object_time;
+    s->stopAllActions();
+    s->runAction(CCMoveBy::create(explossion_object_time,v));
+    s->runAction(CCRotateBy::create(explossion_object_time, av*explossion_object_time));
+}
+
+
+
+void GameScene::schedule_win() {
+    sound_stop_slowmotionsong();
+    MenuScene::getMenuScene()->showWin();
+}
+
+void GameScene::schedule_lost() {
+    sound_stop_slowmotionsong();
+    MenuScene::getMenuScene()->showLost();
+}
+
 
 GameScene *get_game_scene() {
     if (GameScene::theGameScene==NULL) {
@@ -177,3 +244,8 @@ GameScene *get_game_scene() {
     
     return GameScene::theGameScene;
 }
+
+
+
+
+

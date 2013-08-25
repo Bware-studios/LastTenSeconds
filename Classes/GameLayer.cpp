@@ -8,11 +8,13 @@
 
 #include "GameLayer.h"
 
-const float runinput_target_alfa=0.75;
+const float slowmotion_factor=0.3;
+
+const float runinput_target_alfa=0.5;
 const float runinput_paso_alfa=1.0;
 
-const CCPoint runbar_topleft=ccp(200,120);
-const float runbar_width=300;
+const CCPoint runbar_topleft=ccp(200,baseline_height-30);
+const float runbar_width=400;
 const float runbar_height=50;
 const ccColor4F runbar_color={0.0,1.0,0,1.0};
 const ccColor4F target_color={1.0,0.0,0,1.0};
@@ -37,9 +39,6 @@ GameLayer *GameLayer::create() {
 }
 
 bool GameLayer::init() {
-    
-    printf("control layer created\n");
-    
     //this->setKeypadEnabled(true);
     this->setTouchEnabled(true);
     this->setTouchMode(kCCTouchesOneByOne);
@@ -52,12 +51,12 @@ bool GameLayer::init() {
     
     //debug only
     runinput_valueT=CCLabelTTF::create("#", "Marker Felt", 20);
-    runinput_valueT->setPosition(ccp(200,200));
+    runinput_valueT->setPosition(ccp(900,baseline_height-50));
     this->addChild(runinput_valueT);
     
     
     countdown_counterT=CCLabelTTF::create("10.0", "Marker Felt", 60);
-    countdown_counterT->setPosition(ccp(800,500));
+    countdown_counterT->setPosition(ccp(800,baseline_height+470));
     countdown_counterT->setColor((const ccColor3B){255,0,0});
     addChild(countdown_counterT);
     
@@ -77,8 +76,8 @@ bool GameLayer::ccTouchBegan(CCTouch *touch, CCEvent *event) {
         runinput_down=true;
         runinput_downalfa=runinput_alfaBar;
     } else {
-        runinput_enabled=false;
-        jump_enabled=true;
+        //runinput_enabled=false;
+        //jump_enabled=true;
     }
     return true;
 }
@@ -102,6 +101,8 @@ void GameLayer::ccTouchCancelled(CCTouch *touch, CCEvent *event) {
 }
 
 void GameLayer::update(float dt) {
+    dt*=slowmotion_factor;
+    
     tnow+=dt;
     char tstring[100];
     
@@ -110,8 +111,11 @@ void GameLayer::update(float dt) {
         counter_time=0;
         if (!explosion_enabled) {
             explosion_enabled=true;
+            runinput_enabled=false;
             GameScene::theGameScene->start_explossion();
         }
+    } else {
+        GameScene::theGameScene->check_win();
     }
     sprintf(tstring, "%.1f",counter_time);
     countdown_counterT->setString(tstring);
@@ -120,13 +124,14 @@ void GameLayer::update(float dt) {
     if (runinput_enabled) {
         float runinput_dt;
         runinput_dt=tnow-runinput_lastStepTime;
-        runinput_alfaBar=runinput_dt/1.0; // 1 bar per second
+        runinput_alfaBar=runinput_dt/(1.0*slowmotion_factor); // 1 bar per second
     
         if (runinput_alfaBar>=runinput_paso_alfa) {
             if (!runinput_up) runinput_upalfa=runinput_paso_alfa;
             if (!runinput_down) runinput_downalfa=runinput_paso_alfa;
             float hit_alfa=0.5*(runinput_downalfa+runinput_upalfa);
-            float paso=optimum_step_size*(1-3.0*fabs((hit_alfa-runinput_target_alfa)));
+            float paso=optimum_step_size*(1-3.0*fabs((hit_alfa-runinput_target_alfa)))*slowmotion_factor;
+            if (paso<10) paso=10;
             runinput_doStep();
             GameScene::theGameScene->unpaso(paso);
             //debug

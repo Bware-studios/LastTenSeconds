@@ -25,9 +25,9 @@ public:
     
     static MenuScene *getMenuScene();
     
-    static void waitForPlay();
-    static void showWin();
-    static void showLost();
+    void waitForPlay();
+    void showWin();
+    void showLost();
     
     void action_play();
     
@@ -36,7 +36,7 @@ public:
     CCLayerColor *winPanel;
     CCLayerColor *lostPanel;
     
-    
+    CCLayer *currentPanel;
     
 };
 

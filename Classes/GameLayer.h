@@ -14,6 +14,10 @@
 #include "GameScene.h"
 
 
+extern const float slowmotion_factor;
+
+
+
 class GameLayer : public CCLayer {
 public:
     GameLayer();

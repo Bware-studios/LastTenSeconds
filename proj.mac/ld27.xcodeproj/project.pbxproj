@@ -183,6 +183,12 @@
 		9767433E17C8CFE100B3A173 /* prueba1_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9767433B17C8CFE100B3A173 /* prueba1_2.png */; };
 		9767433F17C8CFE100B3A173 /* prueba1_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9767433C17C8CFE100B3A173 /* prueba1_3.png */; };
 		9767434317C8D4C400B3A173 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9767434117C8D4C400B3A173 /* GameLayer.cpp */; };
+		977F97E717CA67D900E019A8 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 977F97E517CA67D900E019A8 /* Sound.cpp */; };
+		977F97E917CA69CC00E019A8 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 977F97E817CA69CC00E019A8 /* explosion.mp3 */; };
+		977F97EB17CA759E00E019A8 /* chariots.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 977F97EA17CA759E00E019A8 /* chariots.mp3 */; };
+		977F97ED17CAACCF00E019A8 /* fondo.png in Resources */ = {isa = PBXBuildFile; fileRef = 977F97EC17CAACCF00E019A8 /* fondo.png */; };
+		977F97F017CABAF700E019A8 /* final.png in Resources */ = {isa = PBXBuildFile; fileRef = 977F97EE17CABAF700E019A8 /* final.png */; };
+		977F97F117CABAF700E019A8 /* inicio.png in Resources */ = {isa = PBXBuildFile; fileRef = 977F97EF17CABAF700E019A8 /* inicio.png */; };
 		979C0B0217C9459F00033FAE /* jumping.png in Resources */ = {isa = PBXBuildFile; fileRef = 979C0B0017C9459F00033FAE /* jumping.png */; };
 		979C0B0317C9459F00033FAE /* running.png in Resources */ = {isa = PBXBuildFile; fileRef = 979C0B0117C9459F00033FAE /* running.png */; };
 /* End PBXBuildFile section */
@@ -548,6 +554,13 @@
 		9767433C17C8CFE100B3A173 /* prueba1_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prueba1_3.png; sourceTree = "<group>"; };
 		9767434117C8D4C400B3A173 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLayer.cpp; path = ../Classes/GameLayer.cpp; sourceTree = "<group>"; };
 		9767434217C8D4C400B3A173 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = ../Classes/GameLayer.h; sourceTree = "<group>"; };
+		977F97E517CA67D900E019A8 /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sound.cpp; path = ../Classes/Sound.cpp; sourceTree = "<group>"; };
+		977F97E617CA67D900E019A8 /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sound.h; path = ../Classes/Sound.h; sourceTree = "<group>"; };
+		977F97E817CA69CC00E019A8 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
+		977F97EA17CA759E00E019A8 /* chariots.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chariots.mp3; sourceTree = "<group>"; };
+		977F97EC17CAACCF00E019A8 /* fondo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fondo.png; path = hr/fondo.png; sourceTree = "<group>"; };
+		977F97EE17CABAF700E019A8 /* final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = final.png; path = hr/final.png; sourceTree = "<group>"; };
+		977F97EF17CABAF700E019A8 /* inicio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inicio.png; path = hr/inicio.png; sourceTree = "<group>"; };
 		979C0B0017C9459F00033FAE /* jumping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jumping.png; path = hr/jumping.png; sourceTree = "<group>"; };
 		979C0B0117C9459F00033FAE /* running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = running.png; path = hr/running.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -590,6 +603,8 @@
 				9767433817C8C23E00B3A173 /* GameScene.h */,
 				9767434117C8D4C400B3A173 /* GameLayer.cpp */,
 				9767434217C8D4C400B3A173 /* GameLayer.h */,
+				977F97E517CA67D900E019A8 /* Sound.cpp */,
+				977F97E617CA67D900E019A8 /* Sound.h */,
 				1AFAF8C816D3886000DB1158 /* HelloWorldScene.cpp */,
 				1AFAF8C916D3886000DB1158 /* HelloWorldScene.h */,
 			);
@@ -1170,6 +1185,11 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				977F97EE17CABAF700E019A8 /* final.png */,
+				977F97EF17CABAF700E019A8 /* inicio.png */,
+				977F97EC17CAACCF00E019A8 /* fondo.png */,
+				977F97EA17CA759E00E019A8 /* chariots.mp3 */,
+				977F97E817CA69CC00E019A8 /* explosion.mp3 */,
 				9743408917C97AB700CF2A80 /* muebles.png */,
 				9743408A17C97AB700CF2A80 /* testigos.png */,
 				979C0B0017C9459F00033FAE /* jumping.png */,
@@ -1281,6 +1301,11 @@
 				979C0B0317C9459F00033FAE /* running.png in Resources */,
 				9743408B17C97AB700CF2A80 /* muebles.png in Resources */,
 				9743408C17C97AB700CF2A80 /* testigos.png in Resources */,
+				977F97E917CA69CC00E019A8 /* explosion.mp3 in Resources */,
+				977F97EB17CA759E00E019A8 /* chariots.mp3 in Resources */,
+				977F97ED17CAACCF00E019A8 /* fondo.png in Resources */,
+				977F97F017CABAF700E019A8 /* final.png in Resources */,
+				977F97F117CABAF700E019A8 /* inicio.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1444,6 +1469,7 @@
 				9767434317C8D4C400B3A173 /* GameLayer.cpp in Sources */,
 				9743408717C977E100CF2A80 /* utils.cpp in Sources */,
 				9743408F17C9893700CF2A80 /* MenuScene.cpp in Sources */,
+				977F97E717CA67D900E019A8 /* Sound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
