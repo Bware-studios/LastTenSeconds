@@ -50,7 +50,7 @@ MenuScene *MenuScene::getMenuScene() {
 
 void MenuScene::waitForPlay() {
     
-    startPanel=CCLayerColor::create((const ccColor4B){0,0,0,255});
+    startPanel=CCLayerColor::create((const ccColor4B){100,100,100,255});
     CCLabelTTF *t1;
     CCPoint tpos=center_position;
     tpos.x*=1.3;
@@ -97,7 +97,7 @@ void MenuScene::waitForPlay() {
 
 void MenuScene::showWin() {
     char smsg[300];
-    winPanel=CCLayerColor::create((const ccColor4B){0,0,0,255});
+    winPanel=CCLayerColor::create((const ccColor4B){100,100,100,255});
     CCSprite *im1=CCSprite::create("final.png");
     CCPoint ipos=center_position;
     ipos.x/=2.0;
@@ -133,7 +133,7 @@ void MenuScene::showWin() {
 
 void MenuScene::showLost() {
     
-    lostPanel=CCLayerColor::create((const ccColor4B){0,0,0,255});
+    lostPanel=CCLayerColor::create((const ccColor4B){100,100,100,255});
     CCLabelTTF *t1=CCLabelTTF::create("Sorry... \nAnd it was last day before retirement...", "Marker Felt", 40);
     t1->setPosition(ccp(480,500));
     lostPanel->addChild(t1);

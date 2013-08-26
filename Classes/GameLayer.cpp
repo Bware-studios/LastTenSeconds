@@ -8,10 +8,15 @@
 
 #include "GameLayer.h"
 
+const float step_time=0.5;
+
 const float slowmotion_factor=0.3;
 
 const float runinput_target_alfa=0.5;
 const float runinput_paso_alfa=1.0;
+
+const float runinput_alfa_pertimepressedsecond=1.0;
+
 
 const CCPoint runbar_topleft=ccp(200,baseline_height-30);
 const float runbar_width=400;
@@ -61,6 +66,13 @@ bool GameLayer::init() {
     addChild(countdown_counterT);
     
     paso=0;
+    beginning=true;
+    first_step=false;
+
+    on_step=false;
+    runinput_lastStepTime=-1000.0;
+    runinput_step=false;
+    runinput_stepdone=false;
     
     scheduleUpdate();
     return true;
@@ -68,16 +80,11 @@ bool GameLayer::init() {
 
 
 bool GameLayer::ccTouchBegan(CCTouch *touch, CCEvent *event) {
-//    printf("touch\n");
-//    paso+=1;
-//    GameScene::theGameScene->unpaso(paso);
-    
     if (!runinput_down) {
         runinput_down=true;
-        runinput_downalfa=runinput_alfaBar;
-    } else {
-        //runinput_enabled=false;
-        //jump_enabled=true;
+        runinput_alfaBar=0.0;
+        runinput_down_time=tnow;
+        runinput_stepdone=false;
     }
     return true;
 }
@@ -87,23 +94,23 @@ void GameLayer::ccTouchMoved(CCTouch *touch, CCEvent *event) {
 }
 
 void GameLayer::ccTouchEnded(CCTouch *touch, CCEvent *event) {
-    if (!runinput_up) {
-        runinput_up=true;
-        runinput_upalfa=runinput_alfaBar;
+    if (runinput_down) {
+        runinput_down=false;
+        runinput_stepdone=true;
+        runinput_stepInputEnded();
     }
 }
 
 void GameLayer::ccTouchCancelled(CCTouch *touch, CCEvent *event) {
-    if (!runinput_up) {
-        runinput_up=true;
-        runinput_upalfa=runinput_alfaBar;
+    if (runinput_down) {
+        runinput_down=false;
+        runinput_stepdone=true;
+        runinput_stepInputEnded();
     }
 }
 
 void GameLayer::update(float dt) {
-    dt*=slowmotion_factor;
-    
-    tnow+=dt;
+    tnow+=dt*slowmotion_factor;
     char tstring[100];
     
     float counter_time=10-tnow;
@@ -123,22 +130,60 @@ void GameLayer::update(float dt) {
     
     if (runinput_enabled) {
         float runinput_dt;
-        runinput_dt=tnow-runinput_lastStepTime;
-        runinput_alfaBar=runinput_dt/(1.0*slowmotion_factor); // 1 bar per second
-    
-        if (runinput_alfaBar>=runinput_paso_alfa) {
-            if (!runinput_up) runinput_upalfa=runinput_paso_alfa;
-            if (!runinput_down) runinput_downalfa=runinput_paso_alfa;
-            float hit_alfa=0.5*(runinput_downalfa+runinput_upalfa);
-            float paso=optimum_step_size*(1-3.0*fabs((hit_alfa-runinput_target_alfa)))*slowmotion_factor;
-            if (paso<10) paso=10;
-            runinput_doStep();
-            GameScene::theGameScene->unpaso(paso);
-            //debug
-            sprintf(tstring,"%.2f",paso);
+//        runinput_dt=tnow-runinput_lastStepTime;
+//        runinput_alfaBar=runinput_dt/(1.0*slowmotion_factor); // 1 bar per second
+        if (runinput_down) {
+            runinput_alfaBar+=dt*runinput_alfa_pertimepressedsecond;
+            paso=runinput_alfaBar*optimum_step_size;
+            
+            sprintf(tstring,"%.2f %.2f",runinput_alfaBar,paso);
             runinput_valueT->setString(tstring);
         }
-    }
+        
+        if (on_step) {
+            if ( tnow>runinput_lastStepTime+step_time*slowmotion_factor )
+                on_step=false;
+        }
+        if (!on_step) {
+        
+            if ( runinput_step ) {
+                if (runinput_alfaBar>0.5) {
+                    GameScene::theGameScene->fall();
+                    runinput_enabled=false;
+                } else {
+                    GameScene::theGameScene->unpaso(paso);
+                    runinput_lastStepTime=tnow;
+                    paso=0;
+                    on_step=true;
+                }
+            }
+        }
+        }
+    
+        if ( tnow>runinput_lastStepTime+step_time*slowmotion_factor ) {
+            if (!beginning) {
+                if (runinput_down)
+                GameScene::theGameScene->fall();
+                runinput_enabled=false;
+            } else {
+                runinput_lastStepTime=tnow;
+                paso=0;
+                GameScene::theGameScene->unpaso(paso);
+            }
+        }
+            
+//        if (runinput_alfaBar>=runinput_paso_alfa) {
+//            if (!runinput_up) runinput_upalfa=runinput_paso_alfa;
+//            if (!runinput_down) runinput_downalfa=runinput_paso_alfa;
+//            float hit_alfa=0.5*(runinput_downalfa+runinput_upalfa);
+//            float paso=optimum_step_size*(1-3.0*fabs((hit_alfa-runinput_target_alfa)))*slowmotion_factor;
+//            if (paso<10) paso=10;
+//            //runinput_doStep();
+//            //GameScene::theGameScene->unpaso(paso);
+//            //debug
+//            sprintf(tstring,"%.2f",paso);
+//            runinput_valueT->setString(tstring);
+//        }
 }
 
 void GameLayer::draw() {
@@ -148,28 +193,45 @@ void GameLayer::draw() {
     cocos2d::ccDrawSolidRect(target_tl, target_br, target_color);
     
     // draw bar
-    CCPoint runbar_bottomright=ccp(runbar_topleft.x+runbar_width*runinput_alfaBar,runbar_topleft.y-runbar_height);
-    cocos2d::ccDrawSolidRect(runbar_topleft, runbar_bottomright, runbar_color);
+//    CCPoint runbar_bottomright=ccp(runbar_topleft.x+runbar_width*runinput_alfaBar,runbar_topleft.y-runbar_height);
+//    cocos2d::ccDrawSolidRect(runbar_topleft, runbar_bottomright, runbar_color);
+    
+    if (runinput_down) {
+        CCPoint runbar_bottomright=ccp(runbar_topleft.x+runbar_width*runinput_alfaBar,runbar_topleft.y-runbar_height);
+        cocos2d::ccDrawSolidRect(runbar_topleft, runbar_bottomright, runbar_color);
+    }
+    if (runinput_stepdone) {
+        CCPoint runbar_bottomright=ccp(runbar_topleft.x+runbar_width*runinput_alfaBar,runbar_topleft.y-runbar_height);
+        cocos2d::ccDrawSolidRect(runbar_topleft, runbar_bottomright, hit_color);
+    }
+
     
     //draw mouse
-    if (!runinput_down) return;
-    target_tl=ccp(runbar_topleft.x+runinput_downalfa*runbar_width,runbar_topleft.y);
-    if (runinput_up) {
-        target_br=ccp(runbar_topleft.x+runinput_upalfa*runbar_width,runbar_bottomright.y);
-    } else {
-        target_br=ccp(runbar_bottomright.x,runbar_bottomright.y);
-    }
-    cocos2d::ccDrawSolidRect(target_tl, target_br, hit_color);
+//    if (!runinput_down) return;
+//    target_tl=ccp(runbar_topleft.x+runinput_downalfa*runbar_width,runbar_topleft.y);
+//    if (runinput_up) {
+//        target_br=ccp(runbar_topleft.x+runinput_upalfa*runbar_width,runbar_bottomright.y);
+//    } else {
+//        target_br=ccp(runbar_bottomright.x,runbar_bottomright.y);
+//    }
+//    cocos2d::ccDrawSolidRect(target_tl, target_br, hit_color);
 }
 
 void GameLayer::runinput_enable() {
     runinput_enabled=true;
-    runinput_doStep();
+
+    runinput_down=false;
+    //    runinput_doStep();
 }
 
-void GameLayer::runinput_doStep() {
-    runinput_lastStepTime=tnow;
-    runinput_alfaBar=0;
-    runinput_down=false;
-    runinput_up=false;
+void GameLayer::runinput_stepInputEnded() {
+    runinput_step=true;
+    //    if (tnow>runinput_lastStepTime+step_time*slowmotion_factor || beginning) {
+//        beginning=false;
+//        runinput_lastStepTime=tnow;
+//        GameScene::theGameScene->unpaso(paso);
+//    } else {
+//        GameScene::theGameScene->fall();
+//    }
+//
 }

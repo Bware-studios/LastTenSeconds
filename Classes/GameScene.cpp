@@ -44,7 +44,15 @@ GameScene *GameScene::create() {
 }
 
 bool GameScene::init() {
-    anim_run=CCAnimationCache::sharedAnimationCache()->animationByName("run");
+    anim_run=new CCAnimation*[2];
+    
+    anim_run[0]=CCAnimationCache::sharedAnimationCache()->animationByName("run_step1");
+    anim_run[1]=CCAnimationCache::sharedAnimationCache()->animationByName("run_step2");
+    
+    anim_fall=CCAnimationCache::sharedAnimationCache()->animationByName("fall");
+
+    
+    istep=0;
 
     
     CCLayerColor *background;
@@ -147,14 +155,14 @@ bool GameScene::init() {
     
     
     man_x=0;
-    man=CCSprite::createWithSpriteFrameName("run1");
+    man=CCSprite::createWithSpriteFrameName("run3");
     man->setAnchorPoint(ccp(0.5,0));
-    man->setPosition(ccp(-30,baseline_height+20));
+    man->setPosition(ccp(40,baseline_height+20));
     //man->runAction(CCRepeatForever::create(CCAnimate::create(anim_run)));
 
 
     
-    unpaso(optimum_step_size);
+    //unpaso(optimum_step_size);
     sound_play_slowmotionsong();
     this->addChild(man,20);
 
@@ -167,10 +175,19 @@ void GameScene::unpaso(float paso) {
 //    man_x+=5;
 //    man->setPosition(ccp(10+man_x,200));
 //    man->setDisplayFrame(man_frames[paso%8]);
-    man->runAction(CCAnimate::create(anim_run));
-    man->runAction(CCMoveBy::create(1.0/slowmotion_factor, ccp(paso,0)));
+    
+    man->runAction(CCAnimate::create(anim_run[istep%2]));
+    man->runAction(CCMoveBy::create(step_time, ccp(paso,0)));
 
+    istep+=1;
 }
+
+void GameScene::fall() {
+    man->setAnchorPoint(ccp(0.25,0));
+    man->runAction(CCAnimate::create(anim_fall));
+}
+
+
 
 void GameScene::check_win() {
     CCPoint manpos=man->getPosition();
@@ -223,6 +240,8 @@ void GameScene::explossion_move_sprite(CCSprite *s) {
     s->runAction(CCMoveBy::create(explossion_object_time,v));
     s->runAction(CCRotateBy::create(explossion_object_time, av*explossion_object_time));
 }
+
+
 
 
 

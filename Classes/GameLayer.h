@@ -14,6 +14,7 @@
 #include "GameScene.h"
 
 
+extern const float step_time;
 extern const float slowmotion_factor;
 
 
@@ -34,7 +35,7 @@ public:
     void draw();
     
     void runinput_enable();
-    void runinput_doStep();
+    void runinput_stepInputEnded();
     
     float tnow;
     CCLabelTTF *countdown_counterT;
@@ -44,17 +45,23 @@ public:
     bool jump_enabled;
     bool reachedbomb_enabled;
     bool explosion_enabled;
+    bool beginning;
     
-    bool runinput_enabled;
-    float runinput_lastStepTime;
-    float runinput_alfaBar;
-    float runinput_downalfa;
-    bool runinput_down;
-    float runinput_upalfa;
-    bool runinput_up;
     CCLabelTTF *runinput_valueT;
     
-    int paso;
+    
+    bool on_step;
+    float runinput_lastStepTime;
+
+    bool runinput_step;
+    bool first_step;
+    bool runinput_enabled;
+    bool runinput_down;
+    bool runinput_stepdone;
+    float runinput_alfaBar;
+    float runinput_down_time;
+    
+    float paso;
     
 };
 

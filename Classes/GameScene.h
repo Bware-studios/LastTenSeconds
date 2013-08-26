@@ -27,6 +27,7 @@ public:
     bool init();
     
     void unpaso(float paso);
+    void fall();
     void check_win();
     void start_explossion();
     void explossion_move_sprite(CCSprite *s);
@@ -34,8 +35,9 @@ public:
     void schedule_win();
     void schedule_lost();
 
-    
-    CCAnimation *anim_run;
+    CCAnimation *anim_fall;
+    CCAnimation **anim_run;
+    int istep;
     class GameLayer *control_layer;
     static class GameScene *theGameScene;
     

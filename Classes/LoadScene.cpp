@@ -81,6 +81,24 @@ bool LoadScene::loadAssets() {
     sf = CCSpriteFrame::create(file_name, CCRectMake(7*sw, 0, sw, sh));
     sf_cache->addSpriteFrame(sf, "run8");
 
+    char jumping_name[]="jumping.png";
+    file_name=jumping_name;
+    sw=256;
+    sh=256;
+    sf_cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    sf = CCSpriteFrame::create(file_name, CCRectMake(0*sw, 0, sw, sh));
+    sf_cache->addSpriteFrame(sf, "impulse");
+    sf = CCSpriteFrame::create(file_name, CCRectMake(1*sw, 0, sw, sh));
+    sf_cache->addSpriteFrame(sf, "jump");
+    sf = CCSpriteFrame::create(file_name, CCRectMake(2*sw, 0, sw, sh));
+    sf_cache->addSpriteFrame(sf, "down");
+    sf = CCSpriteFrame::create(file_name, CCRectMake(3*sw, 0, sw, sh));
+    sf_cache->addSpriteFrame(sf, "deactivating");
+    sf = CCSpriteFrame::create(file_name, CCRectMake(4*sw, 0, sw, sh));
+    sf_cache->addSpriteFrame(sf, "falling");
+
+    
+    
     
     char muebles_name[]="muebles.png";
     file_name=muebles_name;
@@ -132,10 +150,23 @@ bool LoadScene::loadAssets() {
 
     an_cache = CCAnimationCache::sharedAnimationCache();
     
-    frames=CCArray::create(sf_cache->spriteFrameByName("run3"),sf_cache->spriteFrameByName("run4"),sf_cache->spriteFrameByName("run5"),sf_cache->spriteFrameByName("run6"),sf_cache->spriteFrameByName("run7"),sf_cache->spriteFrameByName("run8"),sf_cache->spriteFrameByName("run1"),sf_cache->spriteFrameByName("run2"),NULL);
+    frames=CCArray::create(sf_cache->spriteFrameByName("run3"),sf_cache->spriteFrameByName("run4"),sf_cache->spriteFrameByName("run5"),sf_cache->spriteFrameByName("run6"),sf_cache->spriteFrameByName("run7"),NULL);
     anim=CCAnimation::createWithSpriteFrames(frames,0.125/*/slowmotion_factor*/);
-    an_cache->addAnimation(anim, "run");
+    an_cache->addAnimation(anim, "run_step1");
 
+    
+    frames=CCArray::create(sf_cache->spriteFrameByName("run7"),sf_cache->spriteFrameByName("run8"),sf_cache->spriteFrameByName("run1"),sf_cache->spriteFrameByName("run2"),sf_cache->spriteFrameByName("run3"),NULL);
+    anim=CCAnimation::createWithSpriteFrames(frames,0.125/*/slowmotion_factor*/);
+    an_cache->addAnimation(anim, "run_step2");
+
+    
+    frames=CCArray::create(sf_cache->spriteFrameByName("falling"),sf_cache->spriteFrameByName("down"),NULL);
+    anim=CCAnimation::createWithSpriteFrames(frames,0.125/*/slowmotion_factor*/);
+    an_cache->addAnimation(anim, "fall");
+
+    
+    
+    
 //    frames=CCArray::create(sf_cache->spriteFrameByName("people1_1"),sf_cache->spriteFrameByName("people1_2"),sf_cache->spriteFrameByName("people1_3"),NULL);
 //    anim=CCAnimation::createWithSpriteFrames(frames,1/slowmotion_factor);
 //    an_cache->addAnimation(anim, "people1");
