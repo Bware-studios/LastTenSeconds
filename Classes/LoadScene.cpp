@@ -161,7 +161,7 @@ bool LoadScene::loadAssets() {
 
     
     frames=CCArray::create(sf_cache->spriteFrameByName("falling"),sf_cache->spriteFrameByName("down"),NULL);
-    anim=CCAnimation::createWithSpriteFrames(frames,0.125/*/slowmotion_factor*/);
+    anim=CCAnimation::createWithSpriteFrames(frames,0.4/*/slowmotion_factor*/);
     an_cache->addAnimation(anim, "fall");
 
     

@@ -8,7 +8,7 @@
 
 #include "GameScene.h"
 
-const float optimum_step_size = 100.0;
+const float optimum_step_size = 30.0;
 const int num_objetos = 4;
 const int num_people = 3;
 const float baseline_height = 100.0;
@@ -171,13 +171,13 @@ bool GameScene::init() {
 }
 
 
-void GameScene::unpaso(float paso) {
+void GameScene::step(float stepdistance) {
 //    man_x+=5;
 //    man->setPosition(ccp(10+man_x,200));
 //    man->setDisplayFrame(man_frames[paso%8]);
     
     man->runAction(CCAnimate::create(anim_run[istep%2]));
-    man->runAction(CCMoveBy::create(step_time, ccp(paso,0)));
+    man->runAction(CCMoveBy::create(step_time, ccp(stepdistance,0)));
 
     istep+=1;
 }
@@ -192,7 +192,7 @@ void GameScene::fall() {
 void GameScene::check_win() {
     CCPoint manpos=man->getPosition();
     if (fabs(manpos.x-bomb_position.x) < 5.0) {
-        score_seconds_left=10-control_layer->tnow;
+        score_seconds_left=10-control_layer->tgame;
         schedule_win();
     }
 }

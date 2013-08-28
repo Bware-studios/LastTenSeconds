@@ -26,7 +26,7 @@ public:
     static GameScene *create();
     bool init();
     
-    void unpaso(float paso);
+    void step(float stepdistance);
     void fall();
     void check_win();
     void start_explossion();
