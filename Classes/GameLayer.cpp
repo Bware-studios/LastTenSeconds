@@ -279,7 +279,16 @@ void GameLayer::runinput_tryNewStep() {
         runinput_down=false;
         current_slowmotion_factor=1.0;
     } else { // jump
-        
+        GameScene::theGameScene->jump();
+        runinput_enabled=false;
+        runinput_step_inputready=false;
+        runinput_down=false;
     }
 
 }
+
+void GameLayer::recover_from_fall() {
+    runinput_enabled=true;
+}
+
+

@@ -27,15 +27,20 @@ public:
     bool init();
     
     void step(float stepdistance);
+    void jump();
     void fall();
     void check_win();
     void start_explossion();
     void explossion_move_sprite(CCSprite *s);
 
+    
+    void schedule_jumpend();
+    void schedule_fallend();
     void schedule_win();
     void schedule_lost();
 
     CCAnimation *anim_fall;
+    CCAnimation *anim_jump;
     CCAnimation **anim_run;
     int istep;
     class GameLayer *control_layer;

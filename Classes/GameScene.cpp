@@ -50,6 +50,7 @@ bool GameScene::init() {
     anim_run[1]=CCAnimationCache::sharedAnimationCache()->animationByName("run_step2");
     
     anim_fall=CCAnimationCache::sharedAnimationCache()->animationByName("fall");
+    anim_jump=CCAnimationCache::sharedAnimationCache()->animationByName("jump");
 
     
     istep=0;
@@ -182,9 +183,14 @@ void GameScene::step(float stepdistance) {
     istep+=1;
 }
 
+void GameScene::jump() {
+    man->setAnchorPoint(ccp(0.25,0));
+    man->runAction(CCSequence::create(CCAnimate::create(anim_jump),CCMoveBy::create(0.6, ccp(200,-30)),CCCallFunc::create(this,callfunc_selector(GameScene::schedule_jumpend)),NULL));
+}
+
 void GameScene::fall() {
     man->setAnchorPoint(ccp(0.25,0));
-    man->runAction(CCAnimate::create(anim_fall));
+    man->runAction(CCSequence::create(CCAnimate::create(anim_fall),CCCallFunc::create(this,callfunc_selector(GameScene::schedule_fallend)),NULL));
 }
 
 
@@ -199,7 +205,7 @@ void GameScene::check_win() {
 
 
 void GameScene::start_explossion() {
-    printf("booom\n");
+    //printf("booom\n");
     explossion1->setPosition(bomb_position);
     explossion1->resetSystem();
     explossion2->setPosition(bomb_position);
@@ -243,7 +249,18 @@ void GameScene::explossion_move_sprite(CCSprite *s) {
 
 
 
+void GameScene::schedule_jumpend() {
+    CCPoint pos;
+    pos=man->getPosition();
+    man->setPosition(ccp(pos.x,pos.y+30));
+    man->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("down"));
+}
 
+void GameScene::schedule_fallend() {
+    man->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("run3"));
+    man->setAnchorPoint(ccp(0.5,0));
+    control_layer->recover_from_fall();
+}
 
 void GameScene::schedule_win() {
     sound_stop_slowmotionsong();

@@ -36,6 +36,8 @@ public:
     
     void runinput_enable();
     void runinput_tryNewStep();
+
+    void recover_from_fall();
     
     float tnow;
     float tgame;
