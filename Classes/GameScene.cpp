@@ -213,10 +213,14 @@ void GameScene::start_deactivation() {
 
 void GameScene::check_reachbomb() {
     CCPoint manpos=man->getPosition();
-    if (fabs(manpos.x-bomb_position.x) < 5.0) {
-        start_deactivation();
-        score_seconds_left=10-control_layer->tgame;
-       // schedule_win();
+    if (control_layer->jump_enabled) { // check reach jumping
+        if (fabs(manpos.x-bomb_position.x) < 100.0) {
+            start_deactivation();
+        }
+    } else { // check reach running
+        if (fabs(manpos.x-bomb_position.x) < 20.0) {
+            start_deactivation();
+        }
     }
 }
 
@@ -274,7 +278,7 @@ void GameScene::explossion_move_sprite(CCNode *s) {
 void GameScene::show_deactivation() {
     float dwr,dhr;
     if (deactivate_dialog) return;
-    
+
     dwr=250;
     dhr=200;
     
@@ -321,6 +325,7 @@ void GameScene::cut_bad_wire() {
 
 void GameScene::cut_good_wire() {
     control_layer->deactivated();
+    score_seconds_left=10-control_layer->tgame;
     win_anim_start();
 }
 

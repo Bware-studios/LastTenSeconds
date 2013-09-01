@@ -92,6 +92,8 @@ bool GameLayer::init() {
     on_step=false;
     runinput_stepdone=false;
 
+    jump_enabled=false;
+
     current_slowmotion_factor=slowmotion_factor;
     
     scheduleUpdate();
@@ -293,6 +295,7 @@ void GameLayer::runinput_tryNewStep() {
         runinput_enabled=false;
         runinput_step_inputready=false;
         runinput_down=false;
+        jump_enabled=true;
     }
 
 }
