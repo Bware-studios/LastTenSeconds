@@ -18,4 +18,9 @@ void sound_play_effect(const char *name);
 void sound_play_slowmotionsong();
 void sound_stop_slowmotionsong();
 
+void sound_play_alarm();
+void sound_stop_alarm();
+
+
+
 #endif /* defined(__ld27__Sound__) */

@@ -29,16 +29,25 @@ public:
     void step(float stepdistance);
     void jump();
     void fall();
-    void check_win();
+    void start_deactivation();
+    void check_reachbomb();
     void start_explossion();
-    void explossion_move_sprite(CCSprite *s);
+    void explossion_move_sprite(CCNode *s);
+    void show_deactivation();
 
+    void cut_bad_wire();
+    void cut_good_wire();
+    
+    void win_anim_start();
+    void win_anim_loop();
     
     void schedule_jumpend();
     void schedule_fallend();
     void schedule_win();
     void schedule_lost();
 
+    CCLayerColor *deactivate_dialog;
+    
     CCAnimation *anim_fall;
     CCAnimation *anim_jump;
     CCAnimation **anim_run;
@@ -54,6 +63,9 @@ public:
     float man_x;
     
     float score_seconds_left;
+    
+    int win_loop_i;
+    
     
     CCParticleExplosion *explossion1;
     CCParticleExplosion *explossion2;

@@ -26,13 +26,16 @@ public:
     static MenuScene *getMenuScene();
     
     void waitForPlay();
+    void inGame();
     void showWin();
     void showLost();
     
     void action_play();
+    void action_entergamescene();
     
     
     CCLayerColor *startPanel;
+    CCLayerColor *ingamePanel;
     CCLayerColor *winPanel;
     CCLayerColor *lostPanel;
     

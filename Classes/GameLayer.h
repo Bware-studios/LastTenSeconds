@@ -14,6 +14,9 @@
 #include "GameScene.h"
 
 
+extern const bool show_debug_info;
+
+
 extern const float step_time;
 extern const float slowmotion_factor;
 
@@ -38,6 +41,8 @@ public:
     void runinput_tryNewStep();
 
     void recover_from_fall();
+    void deactivated();
+    void exploded();
     
     float tnow;
     float tgame;
@@ -67,7 +72,8 @@ public:
     bool reachedbomb_enabled;
     bool beginning;
     
-    
+    bool bomb_deactivated;
+    bool bomb_exploded;
     
     bool on_step;
     float runinput_lastStepTime;

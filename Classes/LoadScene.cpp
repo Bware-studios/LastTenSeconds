@@ -167,7 +167,11 @@ bool LoadScene::loadAssets() {
     frames=CCArray::create(sf_cache->spriteFrameByName("impulse"),sf_cache->spriteFrameByName("jump"),NULL);
     anim=CCAnimation::createWithSpriteFrames(frames,0.2/*/slowmotion_factor*/);
     an_cache->addAnimation(anim, "jump");
-    
+
+    frames=CCArray::create(sf_cache->spriteFrameByName("impulse"),sf_cache->spriteFrameByName("jump"),sf_cache->spriteFrameByName("impulse"),NULL);
+    anim=CCAnimation::createWithSpriteFrames(frames,0.2/*/slowmotion_factor*/);
+    an_cache->addAnimation(anim, "celebrating");
+
     
     
 //    frames=CCArray::create(sf_cache->spriteFrameByName("people1_1"),sf_cache->spriteFrameByName("people1_2"),sf_cache->spriteFrameByName("people1_3"),NULL);

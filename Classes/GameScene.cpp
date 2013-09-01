@@ -153,6 +153,7 @@ bool GameScene::init() {
 //        people[i]->runAction(CCRepeatForever::create(CCAnimate::create(CCAnimationCache::sharedAnimationCache()->animationByName(pname))));
     }
     
+    deactivate_dialog=NULL;
     
     
     man_x=0;
@@ -183,9 +184,11 @@ void GameScene::step(float stepdistance) {
     istep+=1;
 }
 
+
 void GameScene::jump() {
     man->setAnchorPoint(ccp(0.25,0));
     man->runAction(CCSequence::create(CCAnimate::create(anim_jump),CCMoveBy::create(0.6, ccp(200,-30)),CCCallFunc::create(this,callfunc_selector(GameScene::schedule_jumpend)),NULL));
+    
 }
 
 void GameScene::fall() {
@@ -193,13 +196,27 @@ void GameScene::fall() {
     man->runAction(CCSequence::create(CCAnimate::create(anim_fall),CCCallFunc::create(this,callfunc_selector(GameScene::schedule_fallend)),NULL));
 }
 
+void GameScene::start_deactivation() {
+    CCPoint pos;
+    pos=man->getPosition();
+    man->setPosition(ccp(pos.x,baseline_height+20));
+    man->stopAllActions();
+    man->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("deactivating"));
+    control_layer->runinput_enabled=false;
+    control_layer->runinput_down=false;
+    
+    show_deactivation();
+
+    
+}
 
 
-void GameScene::check_win() {
+void GameScene::check_reachbomb() {
     CCPoint manpos=man->getPosition();
     if (fabs(manpos.x-bomb_position.x) < 5.0) {
+        start_deactivation();
         score_seconds_left=10-control_layer->tgame;
-        schedule_win();
+       // schedule_win();
     }
 }
 
@@ -219,15 +236,20 @@ void GameScene::start_explossion() {
         explossion_move_sprite(people[i]);
     }
     explossion_move_sprite(man);
+    
+    if (deactivate_dialog) { explossion_move_sprite(deactivate_dialog); }
+    
     removeChild(objetos[0]);
     
     sound_stop_slowmotionsong();
     sound_play_effect(sound_explosion_name);
     
     runAction(CCSequence::create(CCDelayTime::create(3.0),CCCallFunc::create(this, callfunc_selector(GameScene::schedule_lost)),NULL));
+    
+    control_layer->exploded();
 }
 
-void GameScene::explossion_move_sprite(CCSprite *s) {
+void GameScene::explossion_move_sprite(CCNode *s) {
     CCPoint spos=s->getPosition();
     CCPoint v;
     float d;
@@ -249,6 +271,82 @@ void GameScene::explossion_move_sprite(CCSprite *s) {
 
 
 
+void GameScene::show_deactivation() {
+    float dwr,dhr;
+    if (deactivate_dialog) return;
+    
+    dwr=250;
+    dhr=200;
+    
+    deactivate_dialog=CCLayerColor::create((const ccColor4B){150,180,150,220}, 2*dwr, 2*dhr);
+    deactivate_dialog->setAnchorPoint(ccp(0.5,0.5));
+    deactivate_dialog->ignoreAnchorPointForPosition(false);
+    deactivate_dialog->setPosition(center_position);
+    CCSprite *im=CCSprite::createWithSpriteFrameName("bomb");
+    im->setAnchorPoint(ccp(0.5,0));
+    im->setPosition(ccp(dwr,dhr+50));
+    deactivate_dialog->addChild(im);
+    CCLabelTTF *l1;
+    l1=CCLabelTTF::create("Which cable will you cut??", "Marker Felt", 40);
+    l1->setPosition(ccp(dwr,dhr));
+    deactivate_dialog->addChild(l1);
+    
+    const char *mtexts[3]={"red","green","blue"};
+    ccColor3B mcolors[3]={(const ccColor3B){255,0,0},(const ccColor3B){0,255,0},(const ccColor3B){0,0,255}};
+    CCMenuItemLabel *ml1[3];
+    SEL_MenuHandler mls1[3]={menu_selector(GameScene::cut_bad_wire),menu_selector(GameScene::cut_bad_wire),menu_selector(GameScene::cut_bad_wire)};
+    int i;
+
+    i=((int)(CCRANDOM_0_1()*1000))%3;
+    mls1[i]=menu_selector(GameScene::cut_good_wire);
+    // hint
+    //mcolors[i]=(const ccColor3B){255,255,255};
+    
+    for (i=0;i<3;i++) {
+        ml1[i]=CCMenuItemLabel::create(CCLabelTTF::create(mtexts[i], "Marker Felt", 40), this, mls1[i]);
+        ml1[i]->setColor(mcolors[i]);
+        ml1[i]->setPosition(ccp(-100+i*100,0));
+    }
+    CCMenu *m1;
+    m1=CCMenu::create(ml1[0],ml1[1],ml1[2],NULL);
+    m1->setPosition(ccp(dwr,dhr-100));
+    deactivate_dialog->addChild(m1);
+    
+    addChild(deactivate_dialog,50);
+}
+
+void GameScene::cut_bad_wire() {
+    start_explossion();
+}
+
+void GameScene::cut_good_wire() {
+    control_layer->deactivated();
+    win_anim_start();
+}
+
+
+void GameScene::win_anim_start() {
+    sound_stop_slowmotionsong();
+    removeChild(deactivate_dialog);
+    win_loop_i=5;
+    win_anim_loop();
+}
+
+void GameScene::win_anim_loop() {
+    if (win_loop_i==0) {
+        schedule_win();
+        return;
+    }
+    man->runAction(CCSequence::create(CCAnimate::create(CCAnimationCache::sharedAnimationCache()->animationByName("celebrating")),CCCallFunc::create(this,callfunc_selector(GameScene::win_anim_loop)),NULL));
+    
+    //CCSequence *jump_seq=CCSequence::create(CCMoveBy::create(0.3, ccp(0,40)),CCMoveBy::create(0.3,ccp(0,-40)),NULL);
+    int i;
+    for (i=0;i<num_people;i++) {
+        people[i]->runAction(CCSequence::create(CCDelayTime::create(0.2*CCRANDOM_0_1()),CCMoveBy::create(0.25, ccp(0,40)),CCMoveBy::create(0.25,ccp(0,-40)),NULL));
+    }
+    win_loop_i-=1;
+}
+
 void GameScene::schedule_jumpend() {
     CCPoint pos;
     pos=man->getPosition();
@@ -263,8 +361,7 @@ void GameScene::schedule_fallend() {
 }
 
 void GameScene::schedule_win() {
-    sound_stop_slowmotionsong();
-    MenuScene::getMenuScene()->showWin();
+        MenuScene::getMenuScene()->showWin();
 }
 
 void GameScene::schedule_lost() {

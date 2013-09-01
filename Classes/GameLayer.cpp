@@ -9,6 +9,8 @@
 #include "GameLayer.h"
 
 
+const bool show_debug_info=false;
+
 // runinput constants
 // time per step animation
 const float step_time=0.5;
@@ -55,16 +57,18 @@ bool GameLayer::init() {
     this->setTouchMode(kCCTouchesOneByOne);
     
     tnow=0.0;
+    tgame=0.0;
     runinput_enable();
     reachedbomb_enabled=false;
     jump_enabled=false;
     explossion_started=false;
     
     //debug only
-    runinput_valueT=CCLabelTTF::create("#", "Marker Felt", 20);
-    runinput_valueT->setPosition(ccp(900,baseline_height-50));
-    this->addChild(runinput_valueT);
-    
+    if (show_debug_info) {
+        runinput_valueT=CCLabelTTF::create("#", "Marker Felt", 20);
+        runinput_valueT->setPosition(ccp(900,baseline_height-50));
+        this->addChild(runinput_valueT);
+    }
     
     countdown_counterT=CCLabelTTF::create("10.0", "Marker Felt", 60);
     countdown_counterT->setPosition(ccp(800,baseline_height+470));
@@ -82,6 +86,9 @@ bool GameLayer::init() {
     beginning=true;
     first_step=false;
 
+    bomb_deactivated=false;
+    bomb_exploded=false;
+    
     on_step=false;
     runinput_stepdone=false;
 
@@ -134,28 +141,31 @@ void GameLayer::update(float dt) {
     tgame+=dt*current_slowmotion_factor;
     char tstring[100];
     // counter update
-    float counter_time=10-tgame;
-    if (counter_time<=0) {
-        counter_time=0;
-        if (!explossion_started) {
-            explossion_started=true;
-            runinput_enabled=false;
-            GameScene::theGameScene->start_explossion();
+    if (!bomb_deactivated && !bomb_exploded) {
+        float counter_time=10-tgame;
+        if (counter_time<=0) {
+            counter_time=0;
+            if (!explossion_started) {
+                explossion_started=true;
+                runinput_enabled=false;
+                GameScene::theGameScene->start_explossion();
+            }
+        } else {
+            GameScene::theGameScene->check_reachbomb();
         }
-    } else {
-        GameScene::theGameScene->check_win();
+        sprintf(tstring, "%.1f",counter_time);
+        countdown_counterT->setString(tstring);
     }
-    sprintf(tstring, "%.1f",counter_time);
-    countdown_counterT->setString(tstring);
-    
     
     if (runinput_enabled) {
         if (runinput_down) {
             runinput_alfaBar+=dt*runinput_alfa_persecond;
             runinput_stepx=runinput_alfaBar*optimum_step_size;
             
-            sprintf(tstring,"%.2f %.2f",runinput_alfaBar,runinput_stepx);
-            runinput_valueT->setString(tstring);
+            if (show_debug_info) {
+                sprintf(tstring,"%.2f %.2f",runinput_alfaBar,runinput_stepx);
+                runinput_valueT->setString(tstring);
+            }
         }
         
         if (runinput_onstep_anim && tnow>runinput_currentstep_finish_time) {
@@ -289,6 +299,16 @@ void GameLayer::runinput_tryNewStep() {
 
 void GameLayer::recover_from_fall() {
     runinput_enabled=true;
+}
+
+void GameLayer::deactivated() {
+    runinput_enabled=false;
+    bomb_deactivated=true;
+}
+
+void GameLayer::exploded() {
+    runinput_enabled=false;
+    bomb_exploded=true;
 }
 
 

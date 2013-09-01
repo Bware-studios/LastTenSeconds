@@ -191,6 +191,8 @@
 		977F97F117CABAF700E019A8 /* inicio.png in Resources */ = {isa = PBXBuildFile; fileRef = 977F97EF17CABAF700E019A8 /* inicio.png */; };
 		979C0B0217C9459F00033FAE /* jumping.png in Resources */ = {isa = PBXBuildFile; fileRef = 979C0B0017C9459F00033FAE /* jumping.png */; };
 		979C0B0317C9459F00033FAE /* running.png in Resources */ = {isa = PBXBuildFile; fileRef = 979C0B0117C9459F00033FAE /* running.png */; };
+		97ED277617D3AD4C001594E8 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 97ED277517D3AD4C001594E8 /* alarm.mp3 */; };
+		97ED277817D3B52C001594E8 /* final2.png in Resources */ = {isa = PBXBuildFile; fileRef = 97ED277717D3B52B001594E8 /* final2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -563,6 +565,8 @@
 		977F97EF17CABAF700E019A8 /* inicio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inicio.png; path = hr/inicio.png; sourceTree = "<group>"; };
 		979C0B0017C9459F00033FAE /* jumping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jumping.png; path = hr/jumping.png; sourceTree = "<group>"; };
 		979C0B0117C9459F00033FAE /* running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = running.png; path = hr/running.png; sourceTree = "<group>"; };
+		97ED277517D3AD4C001594E8 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
+		97ED277717D3B52B001594E8 /* final2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = final2.png; path = hr/final2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1185,6 +1189,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				97ED277717D3B52B001594E8 /* final2.png */,
+				97ED277517D3AD4C001594E8 /* alarm.mp3 */,
 				977F97EE17CABAF700E019A8 /* final.png */,
 				977F97EF17CABAF700E019A8 /* inicio.png */,
 				977F97EC17CAACCF00E019A8 /* fondo.png */,
@@ -1306,6 +1312,8 @@
 				977F97ED17CAACCF00E019A8 /* fondo.png in Resources */,
 				977F97F017CABAF700E019A8 /* final.png in Resources */,
 				977F97F117CABAF700E019A8 /* inicio.png in Resources */,
+				97ED277617D3AD4C001594E8 /* alarm.mp3 in Resources */,
+				97ED277817D3B52C001594E8 /* final2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
