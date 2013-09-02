@@ -58,7 +58,7 @@
 		// set window parameters
 		[window becomeFirstResponder];
 		[window setContentView:glView];
-		[window setTitle:@"HelloCpp"];
+		[window setTitle:@"LastTenSeconds"];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
