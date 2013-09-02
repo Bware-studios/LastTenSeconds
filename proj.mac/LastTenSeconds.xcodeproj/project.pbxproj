@@ -176,6 +176,7 @@
 		9743408B17C97AB700CF2A80 /* muebles.png in Resources */ = {isa = PBXBuildFile; fileRef = 9743408917C97AB700CF2A80 /* muebles.png */; };
 		9743408C17C97AB700CF2A80 /* testigos.png in Resources */ = {isa = PBXBuildFile; fileRef = 9743408A17C97AB700CF2A80 /* testigos.png */; };
 		9743408F17C9893700CF2A80 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9743408D17C9893700CF2A80 /* MenuScene.cpp */; };
+		9752355F17D556B80025F9F5 /* LastTenSeconds.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 9752355E17D556B80025F9F5 /* LastTenSeconds.iconset */; };
 		9767433517C8B79800B3A173 /* LoadScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9767433317C8B79800B3A173 /* LoadScene.cpp */; };
 		9767433917C8C23F00B3A173 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9767433717C8C23E00B3A173 /* GameScene.cpp */; };
 		9767433D17C8CFE100B3A173 /* prueba1_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9767433A17C8CFE100B3A173 /* prueba1_1.png */; };
@@ -543,6 +544,7 @@
 		9743408A17C97AB700CF2A80 /* testigos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testigos.png; path = hr/testigos.png; sourceTree = "<group>"; };
 		9743408D17C9893700CF2A80 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuScene.cpp; path = ../Classes/MenuScene.cpp; sourceTree = "<group>"; };
 		9743408E17C9893700CF2A80 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = ../Classes/MenuScene.h; sourceTree = "<group>"; };
+		9752355E17D556B80025F9F5 /* LastTenSeconds.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = LastTenSeconds.iconset; sourceTree = "<group>"; };
 		9767433317C8B79800B3A173 /* LoadScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LoadScene.cpp; path = ../Classes/LoadScene.cpp; sourceTree = "<group>"; };
 		9767433417C8B79800B3A173 /* LoadScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadScene.h; path = ../Classes/LoadScene.h; sourceTree = "<group>"; };
 		9767433617C8B7EB00B3A173 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../Classes/common.h; sourceTree = "<group>"; };
@@ -1126,6 +1128,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				9752355E17D556B80025F9F5 /* LastTenSeconds.iconset */,
 				15C156C21683158700D239F2 /* cocos2dx.xcodeproj */,
 				15C156CB1683159D00D239F2 /* Box2D */,
 				15C1577E168315B300D239F2 /* chipmunk */,
@@ -1309,6 +1312,7 @@
 				977F97F117CABAF700E019A8 /* inicio.png in Resources */,
 				97ED277617D3AD4C001594E8 /* alarm.mp3 in Resources */,
 				97ED277817D3B52C001594E8 /* final2.png in Resources */,
+				9752355F17D556B80025F9F5 /* LastTenSeconds.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
