@@ -1,5 +1,18 @@
 Built as a project in cocos2d-x
 
+In last version of branch master 
+
+commit b4593ca68f64adb5dac76ea31c2d0760596d5209
+Merge: e40d71e a4ee9ae
+Author: minggo <ming@cocos2d-x.org>
+Date:   Mon Sep 2 03:26:00 2013 -0700
+
+    Merge pull request #3527 from 2youyouo2/master
+    
+    update armature
+
+
+
 commit e997ad4a99c3bca123f46ed044cff3f992367b8a
 Author: minggo <ming@cocos2d-x.org>
 Date:   Mon May 6 18:03:35 2013 +0800
